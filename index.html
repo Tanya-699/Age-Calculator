@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(to right, #8360c3, #2ebf91);
+      }
+      .container {
+        text-align: center;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 90%;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .input-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      input[type="date"], button {
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #2ebf91;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background-color: #27a07e;
+      }
+      #result {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .clear-btn {
+        background-color: #ff4d4d;
+      }
+      .clear-btn:hover {
+        background-color: #cc0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>JavaScript <br /><span>Age Calculator</span></h1>
+      <div class="input-box">
+        <input type="date" id="date" />
+        <button onclick="calculateAge()">Calculate</button>
+        <button class="clear-btn" onclick="clearResult()">Clear</button>
+      </div>
+      <p id="result"></p>
+    </div>
+    <script>
+      document.getElementById("date").max = new Date().toISOString().split("T")[0];
+      function calculateAge() {
+        let userInput = document.getElementById("date").value;
+        let result = document.getElementById("result");
+        if (!userInput) {
+          result.innerHTML = "<span style='color: red;'>Please enter a valid date!</span>";
+          return;
+        }
+        let birthDate = new Date(userInput);
+        let today = new Date();
+        let y = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        let d = today.getDate() - birthDate.getDate();
+        if (d < 0) {
+          m--;
+          d += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (m < 0) {
+          y--;
+          m += 12;
+        }
+        result.innerHTML = `You are <span>${y}</span> years, <span>${m}</span> months, and <span>${d}</span> days old.`;
+      }
+      function clearResult() {
+        document.getElementById("date").value = "";
+        document.getElementById("result").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>
